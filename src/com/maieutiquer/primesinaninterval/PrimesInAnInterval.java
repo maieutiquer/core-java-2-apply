@@ -2,6 +2,8 @@ package com.maieutiquer.primesinaninterval;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PrimesInAnInterval {
 
@@ -30,11 +32,21 @@ public class PrimesInAnInterval {
 
 		List<Integer> primes = new ArrayList<Integer>();
 
+		/*
+		// the old fashioned way
 		for (int i = from; i <= to; i++) {
 			if (isPrime(i)) {
 				primes.add(i);
 			}
 		}
+		*/
+
+		// Let's try something new.
+		// Is it better than a for-loop?
+		primes = IntStream.range(from, to + 1) // to inclusive
+			.filter(p -> isPrime(p))
+			.boxed() // turns an IntStream into a Stream<Integer>
+			.collect(Collectors.toList());
 
 		return primes;
 	}
