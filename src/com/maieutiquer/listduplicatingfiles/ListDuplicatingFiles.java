@@ -13,14 +13,13 @@ import java.util.stream.IntStream;
 public class ListDuplicatingFiles {
 	
 	private static boolean contentEquals(Path f1, Path f2) {
-		
 		if (f1.toFile().length() != f2.toFile().length()) {
 			return false;
 		}
-		
+
 		byte[] file1Bytes = null;
 		byte[] file2Bytes = null;
-		
+
 		try {
 			file1Bytes = Files.readAllBytes(f1);
 			file2Bytes = Files.readAllBytes(f2);
@@ -28,11 +27,11 @@ public class ListDuplicatingFiles {
 			// TODO how should I handle this?
 			e.printStackTrace();
 		}
-		
+
 		if (Arrays.equals(file1Bytes, file2Bytes)) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -47,37 +46,35 @@ public class ListDuplicatingFiles {
 		}
 		return filesList;
 	}
-	
+
 	private static List<Path> listDuplicatingFiles(String dir) {
-		
-		// Path path = Paths.get(dir);
-		
+
 		// check if path exists and the app has access to it
 		if (!Files.exists(Paths.get(dir))) {
 			return null;
 		}
-		
+
 		List<Path> filesInFolder = null;
-		
+
 		try {
 			filesInFolder = Files.walk(Paths.get(dir))
-											.filter(Files::isRegularFile)
-											.collect(Collectors.toList());
+								.filter(Files::isRegularFile)
+								.collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<Path> filesInFolderNoDupes = dedupeFilesList(filesInFolder);
-		
+
 		return filesInFolderNoDupes;
 	}
 
 	public static void main(String[] args) {
-		
+
 		String directory = "C:/server/htdocs/dupes";
-		
+
 		List<Path> duplicatingFiles = listDuplicatingFiles(directory);
-		
+
 		System.out.println(duplicatingFiles);
 
 	}
