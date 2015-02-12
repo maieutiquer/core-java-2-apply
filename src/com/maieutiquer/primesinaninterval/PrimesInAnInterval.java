@@ -7,7 +7,7 @@ public class PrimesInAnInterval {
 	
 	private static boolean validInput(int from, int to) {
 		boolean ascending = (from <= to);
-		boolean positive = (from > 0 && to > 0);
+		boolean positive = (from > 0);
 		
 		return ascending && positive;
 	}
