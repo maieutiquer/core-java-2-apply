@@ -1,14 +1,13 @@
 package com.maieutiquer.listduplicatingfiles;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ListDuplicatingFiles {
 	
@@ -36,15 +35,20 @@ public class ListDuplicatingFiles {
 	}
 
 	private static List<Path> dedupeFilesList(List<Path> filesList) {
+		
+		List<Path> uniqueFiles =  new ArrayList<Path>(filesList);
+		
 		for (int i = 0; i < filesList.size() - 1; i++) {
 			for (int j = i + 1; j < filesList.size(); j++) {
+				System.out.println("test");
 				if (contentEquals(filesList.get(i), filesList.get(j))) {
-					System.out.println(filesList.get(i));
-					filesList.remove(i);
+					System.out.println("Unique file found: " + filesList.get(j));
+					uniqueFiles.remove(filesList.get(j));
+					break;
 				}
 			}
 		}
-		return filesList;
+		return uniqueFiles;
 	}
 
 	private static List<Path> listDuplicatingFiles(String dir) {
