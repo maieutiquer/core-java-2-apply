@@ -35,9 +35,9 @@ public class ListDuplicatingFiles {
 	}
 
 	private static List<Path> dedupeFilesList(List<Path> filesList) {
-		
+
 		List<Path> uniqueFiles =  new ArrayList<Path>(filesList);
-		
+
 		for (int i = 0; i < filesList.size() - 1; i++) {
 			for (int j = i + 1; j < filesList.size(); j++) {
 				System.out.println("test");
