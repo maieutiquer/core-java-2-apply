@@ -1,59 +1,18 @@
 package com.maieutiquer.primesinaninterval;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PrimesInAnInterval {
 
-	private static boolean validInput(int from, int to) {
-		boolean ascending = (from < to);
-		boolean positive = (from > 0);
-		
-		return ascending && positive;
-	}
-
-	private static boolean isPrime(int number) {
-		for (int i = 2; i <= Math.sqrt(number); i++) {
-			if (number % i == 0) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private static List<Integer> primesInAnInterval(int from, int to) {
-		if (!validInput(from, to)) {
-			// TODO probably trow exception or something
-			System.out.println("invalid input");
-			return null;
-		}
-
-		List<Integer> primes = new ArrayList<Integer>();
-
-		/*
-		// the old fashioned way
-		for (int i = from; i <= to; i++) {
-			if (isPrime(i)) {
-				primes.add(i);
-			}
-		}
-		*/
-
-		// Let's try something new.
-		// Is it better than a for-loop?
-		primes = IntStream.range(from, to + 1) // to inclusive
-			.filter(p -> isPrime(p))
-			.boxed() // turns an IntStream into a Stream<Integer>
-			.collect(Collectors.toList());
-
-		return primes;
-	}
-
 	public static void main(String[] args) {
 
-		List<Integer> primes = primesInAnInterval(2, 20);
+		PrimesFinder primesFinder = null;
+		try {
+			primesFinder = new PrimesFinder(2, 20);
+		} catch (InvalidRangeException e) {
+			System.out.println(e.getMessage());
+		}
+		List<Integer> primes = primesFinder.primesInAnInterval();
 
 		System.out.println(primes);
 
