@@ -7,20 +7,9 @@ import java.util.stream.IntStream;
 
 public class PrimesFinder {
 
-	private int from;
-	private int to;
-
-	public PrimesFinder(int from, int to) throws InvalidRangeException {
-		if (!validInput(from, to)) {
-			throw new InvalidRangeException();
-		}
-		this.from = from;
-		this.to = to;
-	}
-
 	private boolean validInput(int from, int to) {
-		boolean ascending = (from < to);
 		boolean positive = (from > 0);
+		boolean ascending = (from < to);
 
 		return ascending && positive;
 	}
@@ -34,7 +23,11 @@ public class PrimesFinder {
 		return true;
 	}
 
-	public List<Integer> primesInAnInterval() {
+	public List<Integer> primesInAnInterval(int from, int to) throws InvalidRangeException {
+
+		if (!validInput(from, to)) {
+			throw new InvalidRangeException("Numbers should be positive and ascending.");
+		}
 
 		List<Integer> primes = new ArrayList<Integer>();
 
@@ -49,7 +42,7 @@ public class PrimesFinder {
 
 		// Let's try something new.
 		// Is it better than a for-loop?
-		primes = IntStream.range(this.from, this.to + 1) // to inclusive
+		primes = IntStream.range(from, to + 1) // to inclusive
 			.filter(p -> isPrime(p))
 			.boxed() // turns an IntStream into a Stream<Integer>
 			.collect(Collectors.toList());

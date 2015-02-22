@@ -11,15 +11,6 @@ import java.util.stream.Collectors;
 
 public class Deduper {
 
-	String directory;
-
-	public Deduper(String dir) throws IOException {
-		if (!Files.exists(Paths.get(dir))) {
-			throw new IOException();
-		}
-		this.directory = dir;
-	}
-
 	private boolean contentEquals(Path f1, Path f2) {
 		if (f1.toFile().length() != f2.toFile().length()) {
 			return false;
@@ -58,11 +49,11 @@ public class Deduper {
 	}
 
 	// should probably be named listUniqueFiles
-	public List<Path> listDuplicatingFiles(String dir) {
+	public List<Path> listDuplicatingFiles(String dir) throws IOException {
 
 		// check if path exists and the app has access to it
 		if (!Files.exists(Paths.get(dir))) {
-			return null;
+			throw new IOException("Path is not a directory");
 		}
 
 		List<Path> filesInFolder = null;

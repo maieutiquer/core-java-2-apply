@@ -6,13 +6,14 @@ public class PrimesInAnInterval {
 
 	public static void main(String[] args) {
 
-		PrimesFinder primesFinder = null;
+		PrimesFinder primesFinder = new PrimesFinder();
+
+		List<Integer> primes = null;
 		try {
-			primesFinder = new PrimesFinder(2, 20);
+			primes = primesFinder.primesInAnInterval(2, 20);
 		} catch (InvalidRangeException e) {
 			System.out.println(e.getMessage());
 		}
-		List<Integer> primes = primesFinder.primesInAnInterval();
 
 		System.out.println(primes);
 

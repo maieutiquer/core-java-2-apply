@@ -9,14 +9,14 @@ public class ListDuplicatingFiles {
 	public static void main(String[] args) {
 
 		String directory = "C:/server/htdocs/dupes";
-		Deduper deduper = null;
+		Deduper deduper = new Deduper();
+
+		List<Path> duplicatingFiles = null;
 		try {
-			deduper = new Deduper(directory);
+			duplicatingFiles = deduper.listDuplicatingFiles(directory);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-
-		List<Path> duplicatingFiles = deduper.listDuplicatingFiles(directory);
 
 		System.out.println(duplicatingFiles);
 
