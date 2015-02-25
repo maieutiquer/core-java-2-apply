@@ -20,40 +20,63 @@ public class AlphabetFinder {
 				&& Character.getNumericValue(ch) <= 35;
 	}
 
-	private String findAlphabet(String characterString) {
+	// returns the end index
+	private int fillAlphabetWithChars(String characterString, List<Character> alphabet) {
 
-		// initialize indices
+		for (int i = 0; i < characterString.length(); i++) {
+				char currentChar = characterString.charAt(i);
+				if (isLetterLowercase(currentChar) && !alphabet.contains(currentChar)) {
+					alphabet.add(currentChar);
+				}
+			if (!(alphabet.size() < 26)) {
+				return i + 1;
+			}
+		}
+		return -1;
+	}
+
+	// returns the begin index
+	private int shortenCharacterStringWithAlphabet(String characterString, int alphabetBeginIndex, int alphabetEndIndex) {
+
+		List<Character> alphabet = new ArrayList<>();
+
+		if (characterString.charAt(alphabetBeginIndex) == 'a') {
+			
+		}
+		
+		for (int i = alphabetBeginIndex; i < alphabetEndIndex; i++) {
+			
+		}
+
+		return alphabetBeginIndex;
+	}
+
+	private String findShortestWithAlphabet(String characterString) {
+
+		// initialize indices, both inclusive
 		int alphabetBeginIndex = 0;
 		int alphabetEndIndex = characterString.length();
 
 		// initialize alphabet
-		/*
-		List<Boolean> alphabet = new ArrayList<Boolean>(Arrays.asList(new Boolean[10]));
-		Collections.fill(alphabet, Boolean.FALSE);
-		*/
-		List<Character> alphabet = new ArrayList<Character>();
+		List<Character> alphabet = new ArrayList<>();
 
-		String substringWithAlphabet = characterString;
+		// work with lowercase
+		String lowerString = characterString.toLowerCase();
 
-		for (int i = alphabetBeginIndex; i < alphabetEndIndex; i++) {
+		alphabetEndIndex = fillAlphabetWithChars(lowerString, alphabet);
 
-			if (alphabet.size() < 26) {
-
-				char currentChar = characterString.charAt(i);
-				
-				if (isLetterLowercase(currentChar) && !alphabet.contains(currentChar)) {
-					alphabet.add(currentChar);
-				}
-				
-			}
-			
-			// TODO when all letters are found,
-			// start trying to shorten the string from its start,
-			// otherwise continue expanding
-
+		if (alphabetEndIndex == -1) {
+			// how do we handle this? Should it throw an exception?
+			return "This string does not contain the alphabet.";
 		}
 
-		return substringWithAlphabet;
+		// TODO when all letters are found,
+		// start trying to shorten the string from its start,
+		// otherwise continue expanding
+		alphabetBeginIndex = shortenCharacterStringWithAlphabet(lowerString, 0, alphabetEndIndex);
+
+		//return alphabet.toString();
+		return characterString.substring(alphabetBeginIndex, alphabetEndIndex);
 	}
 
 	public String smallestSubstringContainingTheAlphabet(String characterString)
@@ -67,10 +90,7 @@ public class AlphabetFinder {
 					);
 		}
 
-		// case insensitive
-		String lowered = characterString.toLowerCase();
-
-		return findAlphabet(lowered);
+		return findShortestWithAlphabet(characterString);
 	}
 
 }

@@ -4,7 +4,7 @@ public class SmallestSubstringContainingTheAlphabet {
 
 	public static void main(String[] args) {
 
-		String stringOfAscii1 = "aaaaaabcdefghijklmnopqrstuvwxyz";
+		String stringOfAscii1 = "aaaabcdefghijklmnopqrstuvwxyz";
 		String stringOfAscii2 = "abcdefghijklmn124345678!@#$%^&*opqrstuvwxyz!*abcdefghijklmn";
 		
 		AlphabetFinder alphabetFinder = new AlphabetFinder();
