@@ -15,6 +15,10 @@ public class AlphabetFinder {
 		return !containsWhitespace && isInAscii;
 	}
 
+	private boolean isLetterLowercase(char ch) {
+		return Character.getNumericValue(ch) >= 10 
+				&& Character.getNumericValue(ch) <= 35;
+	}
 
 	private String findAlphabet(String characterString) {
 
@@ -23,14 +27,29 @@ public class AlphabetFinder {
 		int alphabetEndIndex = characterString.length();
 
 		// initialize alphabet
+		/*
 		List<Boolean> alphabet = new ArrayList<Boolean>(Arrays.asList(new Boolean[10]));
 		Collections.fill(alphabet, Boolean.FALSE);
+		*/
+		List<Character> alphabet = new ArrayList<Character>();
 
 		String substringWithAlphabet = characterString;
 
 		for (int i = alphabetBeginIndex; i < alphabetEndIndex; i++) {
 
-			// TODO main algorithm goes here
+			if (alphabet.size() < 26) {
+
+				char currentChar = characterString.charAt(i);
+				
+				if (isLetterLowercase(currentChar) && !alphabet.contains(currentChar)) {
+					alphabet.add(currentChar);
+				}
+				
+			}
+			
+			// TODO when all letters are found,
+			// start trying to shorten the string from its start,
+			// otherwise continue expanding
 
 		}
 
@@ -43,7 +62,9 @@ public class AlphabetFinder {
 		// no whitespaces
 		// nothing outside of ASCII
 		if (!validInput(characterString)) {
-			throw new InvalidInputStringException("No whitespaces and nothing outside of ASCII allowed.");
+			throw new InvalidInputStringException(
+					"No whitespaces and nothing outside of ASCII allowed."
+					);
 		}
 
 		// case insensitive
